@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ParkWise - DSA Based Smart Parking Management System. An advanced college DSA project featuring Array, Linked List, Queue, Stack, Hash Map, BST, Min Heap, Graph (BFS/DFS), Searching, and Sorting.">
+  <meta name="author" content="Lakshay Kumar - B.Tech CSE">
+  <title>ParkWise | DSA Based Smart Parking Management System</title>
+  
+  <!-- Google Fonts: Inter & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark-theme">
+  <!-- Toast Notifications Container -->
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <!-- App Shell -->
+  <div class="app-layout">
+    
+    <!-- Sidebar Navigation -->
+    <aside id="app-sidebar" class="app-sidebar">
+      <div class="sidebar-header">
+        <div class="brand-logo">
+          <div class="logo-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="4"/>
+              <path d="M9 17V7h4a3 3 0 0 1 0 6H9"/>
+            </svg>
+          </div>
+          <div class="brand-text">
+            <span class="brand-title">Park<span>Wise</span></span>
+            <span class="brand-badge">DSA Core</span>
+          </div>
+        </div>
+        <p class="brand-tagline">Park Smarter. Powered by DSA.</p>
+      </div>
+
+      <nav class="sidebar-nav">
+        <ul class="nav-list">
+          <li class="nav-item">
+            <button class="nav-link active" data-page="dashboard" id="nav-dashboard">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+              <span>Dashboard</span>
+            </button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link" data-page="slots" id="nav-slots">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/><path d="M7 15h2"/><path d="M15 15h2"/></svg>
+              <span>Parking Slots</span>
+              <span class="nav-pill" id="nav-slot-count">0/24</span>
+            </button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link" data-page="smart" id="nav-smart">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <span>Smart Recommendation</span>
+              <span class="nav-badge pulse">AI/Heap</span>
+            </button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link" data-page="entry-exit" id="nav-entry-exit">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+              <span>Vehicle Entry & Exit</span>
+            </button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link" data-page="visualizer" id="nav-visualizer">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+              <span>DSA Visualizer</span>
+              <span class="nav-pill highlight">8 Structures</span>
+            </button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link" data-page="search-sort" id="nav-search-sort">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><path d="M11 8v6"/><path d="M8 11h6"/></svg>
+              <span>Search & Sort Lab</span>
+            </button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link" data-page="history" id="nav-history">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 14 14"/></svg>
+              <span>Parking History</span>
+            </button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link" data-page="about-dsa" id="nav-about-dsa">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+              <span>About DSA / Viva Prep</span>
+            </button>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Sidebar Footer Controls -->
+      <div class="sidebar-footer">
+        <div class="sidebar-meta">
+          <div class="student-info">
+            <span class="student-name">Lakshay Kumar</span>
+            <span class="student-deg">B.Tech CSE Project</span>
+          </div>
+        </div>
+        <div class="sidebar-quick-btns">
+          <button id="btn-load-demo" class="btn btn-outline-cyan btn-sm" title="Load sample active vehicles and waiting queue">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Load Demo Data
+          </button>
+          <button id="btn-reset-system" class="btn btn-outline-danger btn-sm" title="Reset all slots and LocalStorage data">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+            Reset
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="app-main">
+      
+      <!-- Top Header Navigation Bar -->
+      <header class="top-header">
+        <div class="header-left">
+          <button id="mobile-toggle" class="btn-icon mobile-toggle" aria-label="Toggle Navigation">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+          <div class="header-title-box">
+            <h1 id="page-title">Dashboard</h1>
+            <span class="page-subtitle" id="page-subtitle">Real-time Smart Parking Overview & DSA State</span>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <!-- Live Status Pills -->
+          <div class="status-chip chip-available">
+            <span class="status-dot green"></span>
+            <span>Available: <strong id="header-stat-avail">24</strong></span>
+          </div>
+          <div class="status-chip chip-occupied">
+            <span class="status-dot red"></span>
+            <span>Occupied: <strong id="header-stat-occ">0</strong></span>
+          </div>
+          <div class="status-chip chip-waiting">
+            <span class="status-dot amber"></span>
+            <span>Waiting (FIFO): <strong id="header-stat-wait">0</strong></span>
+          </div>
+          <button class="btn btn-primary btn-sm header-action-btn" id="btn-quick-park-modal">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            <span>Park Vehicle</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Scrollable Content Viewport -->
+      <div class="content-scroll">
+        
+        <!-- ============================================== -->
+        <!-- PAGE 1: DASHBOARD                              -->
+        <!-- ============================================== -->
+        <section id="page-dashboard" class="page-section active">
+          
+          <!-- Key Metrics Grid -->
+          <div class="metrics-grid">
+            <div class="metric-card">
+              <div class="metric-icon blue">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18"/><path d="M15 3v18"/><path d="M3 9h18"/><path d="M3 15h18"/></svg>
+              </div>
+              <div class="metric-details">
+                <span class="metric-label">Total Parking Slots</span>
+                <span class="metric-value" id="dash-total-slots">24</span>
+                <span class="metric-sub">Array Size: <code>parkingSlots.length</code></span>
+              </div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-icon green">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              </div>
+              <div class="metric-details">
+                <span class="metric-label">Available Slots</span>
+                <span class="metric-value green" id="dash-avail-slots">24</span>
+                <span class="metric-sub">Filtered via <code>Array.filter()</code></span>
+              </div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-icon red">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+              </div>
+              <div class="metric-details">
+                <span class="metric-label">Occupied Slots</span>
+                <span class="metric-value red" id="dash-occ-slots">0</span>
+                <span class="metric-sub">Tracked in <code>LinkedList</code></span>
+              </div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-icon purple">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 14 14"/></svg>
+              </div>
+              <div class="metric-details">
+                <span class="metric-label">Active Parked Vehicles</span>
+                <span class="metric-value purple" id="dash-active-vehicles">0</span>
+                <span class="metric-sub">Fast Lookup via <code>HashMap</code></span>
+              </div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-icon amber">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              </div>
+              <div class="metric-details">
+                <span class="metric-label">Waiting Vehicles</span>
+                <span class="metric-value amber" id="dash-wait-vehicles">0</span>
+                <span class="metric-sub">FIFO Queue (<code>Queue.size</code>)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Smart Action & Quick Allocation Banner -->
+          <div class="smart-banner">
+            <div class="banner-content">
+              <div class="banner-badge">Smart Parking Pipeline</div>
+              <h2>Intelligent Slot Allocation Algorithm</h2>
+              <p>Uses <strong>Graph BFS</strong> to explore reachable zones from the entrance, evaluates distance & preference weights, and extracts the optimal slot with a <strong>Min-Heap Priority Queue</strong> in O(log k) time.</p>
+              <div class="banner-flow">
+                <span class="flow-step">1. Entrance</span>
+                <span class="flow-arr">→</span>
+                <span class="flow-step">2. Graph BFS</span>
+                <span class="flow-arr">→</span>
+                <span class="flow-step">3. Min-Heap Priority</span>
+                <span class="flow-arr">→</span>
+                <span class="flow-step highlight">4. Best Slot: <strong id="banner-best-slot">A1</strong></span>
+              </div>
+            </div>
+            <div class="banner-actions">
+              <button class="btn btn-emerald" id="btn-banner-find-slot">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                Find & Park in Best Slot
+              </button>
+              <button class="btn btn-outline-light" id="btn-banner-view-dsa">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+                Inspect DSA Internals
+              </button>
+            </div>
+          </div>
+
+          <!-- Dashboard Main Split Layout -->
+          <div class="dashboard-grid">
+            
+            <!-- Left Column: Parking Slots Live Preview -->
+            <div class="card dash-slots-card">
+              <div class="card-header">
+                <div class="header-title-group">
+                  <h3>Parking Slots Map</h3>
+                  <span class="card-subtitle">Array of objects: <code>parkingSlots[0..23]</code></span>
+                </div>
+                <div class="zone-filter-btns" id="dash-zone-tabs">
+                  <button class="tab-btn active" data-zone="ALL">All Zones</button>
+                  <button class="tab-btn" data-zone="A">Zone A</button>
+                  <button class="tab-btn" data-zone="B">Zone B</button>
+                  <button class="tab-btn" data-zone="C">Zone C</button>
+                  <button class="tab-btn" data-zone="D">Zone D</button>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="slots-quick-grid" id="dash-slots-container">
+                  <!-- Injected via JavaScript from Array -->
+                </div>
+                <div class="slots-legend">
+                  <div class="legend-item"><span class="legend-box avail"></span> Available Slot</div>
+                  <div class="legend-item"><span class="legend-box occ"></span> Occupied Slot</div>
+                  <div class="legend-item"><span class="legend-box opt"></span> Best Min-Heap Slot</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Column: Recent Operations (Stack) & Waiting Queue (FIFO) -->
+            <div class="dash-side-col">
+              
+              <!-- Stack: Recent Operations -->
+              <div class="card stack-card">
+                <div class="card-header">
+                  <div class="header-title-group">
+                    <h3>Recent Operations</h3>
+                    <span class="card-subtitle">Stack LIFO (Last-In-First-Out) • <code>Stack.push()</code></span>
+                  </div>
+                  <span class="dsa-tag stack-tag">Stack O(1)</span>
+                </div>
+                <div class="card-body">
+                  <div class="stack-visual-box" id="dash-stack-container">
+                    <!-- Injected via JavaScript from Stack -->
+                  </div>
+                </div>
+              </div>
+
+              <!-- Queue: Waiting Vehicles -->
+              <div class="card queue-card">
+                <div class="card-header">
+                  <div class="header-title-group">
+                    <h3>Waiting Vehicles Queue</h3>
+                    <span class="card-subtitle">Queue FIFO (First-In-First-Out) • <code>Queue.enqueue()</code></span>
+                  </div>
+                  <span class="dsa-tag queue-tag">Queue O(1)</span>
+                </div>
+                <div class="card-body">
+                  <div class="queue-visual-box" id="dash-queue-container">
+                    <!-- Injected via JavaScript from Queue -->
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </section>
+
+        <!-- ============================================== -->
+        <!-- PAGE 2: PARKING SLOTS                          -->
+        <!-- ============================================== -->
+        <section id="page-slots" class="page-section">
+          <div class="page-header-bar">
+            <div>
+              <h2>Interactive Parking Lot Grid</h2>
+              <p>Each slot is an element in the <code>parkingSlots</code> Array. Click any slot to view metadata, park directly, or process exit.</p>
+            </div>
+            <div class="filter-controls">
+              <div class="select-group">
+                <label for="slots-filter-zone">Zone:</label>
+                <select id="slots-filter-zone" class="form-select">
+                  <option value="ALL">All Zones (A, B, C, D)</option>
+                  <option value="A">Zone A (Near Entrance, 10-25m)</option>
+                  <option value="B">Zone B (Central, 30-45m)</option>
+                  <option value="C">Zone C (East Wing, 50-65m)</option>
+                  <option value="D">Zone D (Covered / EV, 70-85m)</option>
+                </select>
+              </div>
+              <div class="select-group">
+                <label for="slots-filter-status">Status:</label>
+                <select id="slots-filter-status" class="form-select">
+                  <option value="ALL">All Statuses</option>
+                  <option value="available">Available Only</option>
+                  <option value="occupied">Occupied Only</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Full Slots Grid -->
+          <div class="slots-full-grid" id="slots-full-container">
+            <!-- Injected via JavaScript -->
+          </div>
+        </section>
+
+        <!-- ============================================== -->
+        <!-- PAGE 3: SMART PARKING PAGE                     -->
+        <!-- ============================================== -->
+        <section id="page-smart" class="page-section">
+          <div class="smart-engine-container">
+            
+            <div class="card smart-ctrl-card">
+              <div class="card-header">
+                <div class="header-title-group">
+                  <h2>Smart Slot Recommender</h2>
+                  <span class="card-subtitle">Graph Breadth-First Search (BFS) + Min-Heap Priority Queue</span>
+                </div>
+                <span class="dsa-tag heap-tag">Min-Heap O(log k)</span>
+              </div>
+              <div class="card-body">
+                <div class="smart-form-grid">
+                  <div class="form-group">
+                    <label for="smart-vehicle-num">Vehicle Registration Plate *</label>
+                    <input type="text" id="smart-vehicle-num" class="form-input" placeholder="e.g. DL-01-AB-1234" maxlength="15" uppercase>
+                  </div>
+                  <div class="form-group">
+                    <label for="smart-vehicle-type">Vehicle Type</label>
+                    <select id="smart-vehicle-type" class="form-select">
+                      <option value="Sedan">Sedan / Compact Car</option>
+                      <option value="SUV">SUV / Large Vehicle</option>
+                      <option value="EV">Electric Vehicle (Needs Charging)</option>
+                      <option value="Bike">Motorcycle / Two Wheeler</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="smart-driver-name">Driver Name (Optional)</label>
+                    <input type="text" id="smart-driver-name" class="form-input" placeholder="e.g. John Doe">
+                  </div>
+                  <div class="form-group">
+                    <label for="smart-zone-pref">Zone Preference</label>
+                    <select id="smart-zone-pref" class="form-select">
+                      <option value="ANY">Any Reachable Zone (Shortest Distance)</option>
+                      <option value="A">Prefer Zone A (Nearest Entrance)</option>
+                      <option value="B">Prefer Zone B (Central Courtyard)</option>
+                      <option value="C">Prefer Zone C (Spacious Bays)</option>
+                      <option value="D">Prefer Zone D (EV Charging & Covered)</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="smart-action-row">
+                  <button class="btn btn-primary btn-lg" id="btn-run-smart-recommendation">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                    Run Smart Recommendation Algorithm
+                  </button>
+                  <button class="btn btn-outline-cyan" id="btn-quick-fill-sample">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                    Fill Random Vehicle
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Algorithm Execution Trace Card -->
+            <div class="card smart-results-card">
+              <div class="card-header">
+                <div class="header-title-group">
+                  <h3>Real-time Algorithmic Execution Pipeline</h3>
+                  <span class="card-subtitle">Detailed step-by-step trace of Graph BFS traversal and Min-Heap scoring</span>
+                </div>
+                <span class="status-chip chip-available" id="smart-status-indicator">Ready to Execute</span>
+              </div>
+              <div class="card-body">
+                
+                <!-- Pipeline Stages Visualization -->
+                <div class="pipeline-viz">
+                  <div class="pipeline-node" id="p-node-entrance">
+                    <span class="p-num">1</span>
+                    <span class="p-title">Entrance</span>
+                    <span class="p-desc">Origin Node (0m)</span>
+                  </div>
+                  <div class="p-arrow">➔</div>
+                  <div class="pipeline-node" id="p-node-bfs">
+                    <span class="p-num">2</span>
+                    <span class="p-title">Graph BFS</span>
+                    <span class="p-desc">Explore Reachable Zones</span>
+                  </div>
+                  <div class="p-arrow">➔</div>
+                  <div class="pipeline-node" id="p-node-heap">
+                    <span class="p-num">3</span>
+                    <span class="p-title">Min-Heap Insert</span>
+                    <span class="p-desc">Score: dist + pref</span>
+                  </div>
+                  <div class="p-arrow">➔</div>
+                  <div class="pipeline-node" id="p-node-extract">
+                    <span class="p-num">4</span>
+                    <span class="p-title">extractMin()</span>
+                    <span class="p-desc">Optimal Candidate</span>
+                  </div>
+                </div>
+
+                <!-- Recommendation Result Box -->
+                <div class="recommended-result-box" id="smart-result-box">
+                  <div class="rec-empty-state">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <h4>Click "Run Smart Recommendation Algorithm" to trigger BFS and Min-Heap.</h4>
+                    <p>The system will dynamically traverse parking zones and compute the optimal parking bay.</p>
+                  </div>
+                </div>
+
+                <!-- Step-by-Step DSA Log Output -->
+                <div class="dsa-execution-log" id="smart-execution-log">
+                  <div class="log-header">
+                    <span>Algorithm Console Output:</span>
+                    <span class="log-clear" id="btn-clear-smart-log">Clear</span>
+                  </div>
+                  <div class="log-body" id="smart-log-text">
+                    <div class="log-line info">> Waiting for recommendation trigger...</div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- ============================================== -->
+        <!-- PAGE 4: VEHICLE ENTRY & EXIT                   -->
+        <!-- ============================================== -->
+        <section id="page-entry-exit" class="page-section">
+          
+          <div class="entry-exit-layout">
+            
+            <!-- Vehicle Entry Card -->
+            <div class="card entry-card">
+              <div class="card-header">
+                <div class="header-title-group">
+                  <h2>Vehicle Entry Portal</h2>
+                  <span class="card-subtitle">Adds vehicle to Linked List & Hash Map, updates Slot Array</span>
+                </div>
+                <span class="dsa-tag map-tag">Hash Map O(1)</span>
+              </div>
+              <div class="card-body">
+                <form id="form-vehicle-entry" onsubmit="return false;">
+                  <div class="form-group">
+                    <label for="entry-reg-no">Vehicle Registration Number *</label>
+                    <input type="text" id="entry-reg-no" class="form-input" placeholder="e.g. MH-12-AB-1234" required maxlength="15">
+                  </div>
+                  <div class="form-group">
+                    <label for="entry-type">Vehicle Classification</label>
+                    <select id="entry-type" class="form-select">
+                      <option value="Sedan">Sedan</option>
+                      <option value="SUV">SUV</option>
+                      <option value="Hatchback">Hatchback</option>
+                      <option value="EV">Electric Vehicle (EV)</option>
+                      <option value="Bike">Motorcycle</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="entry-driver">Driver Name</label>
+                    <input type="text" id="entry-driver" class="form-input" placeholder="e.g. Ramesh Sharma">
+                  </div>
+                  <div class="form-group">
+                    <label for="entry-slot-mode">Slot Assignment Mode</label>
+                    <select id="entry-slot-mode" class="form-select">
+                      <option value="SMART">Smart Recommendation (BFS + Min-Heap)</option>
+                      <option value="MANUAL">Manual Slot Selection</option>
+                    </select>
+                  </div>
+                  <div class="form-group" id="manual-slot-group" style="display: none;">
+                    <label for="entry-manual-slot">Choose Available Slot</label>
+                    <select id="entry-manual-slot" class="form-select">
+                      <!-- Populated dynamically -->
+                    </select>
+                  </div>
+                  <button type="submit" class="btn btn-emerald btn-lg w-100" id="btn-submit-entry">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+                    Park Vehicle
+                  </button>
+                </form>
+              </div>
+            </div>
+
+            <!-- Vehicle Exit Card -->
+            <div class="card exit-card">
+              <div class="card-header">
+                <div class="header-title-group">
+                  <h2>Vehicle Exit Portal</h2>
+                  <span class="card-subtitle">O(1) Hash Map lookup, unlinks from Linked List, dequeues waiting car</span>
+                </div>
+                <span class="dsa-tag list-tag">Linked List O(n)</span>
+              </div>
+              <div class="card-body">
+                <form id="form-vehicle-exit" onsubmit="return false;">
+                  <div class="form-group">
+                    <label for="exit-reg-no">Enter Parked Vehicle Number *</label>
+                    <div class="input-with-button">
+                      <input type="text" id="exit-reg-no" class="form-input" placeholder="e.g. MH-12-AB-1234" required maxlength="15">
+                      <button type="button" class="btn btn-cyan" id="btn-lookup-exit">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                        Lookup
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- Exit Preview Details -->
+                  <div id="exit-preview-details" class="exit-preview-box" style="display: none;">
+                    <div class="preview-row">
+                      <span class="p-label">Vehicle Plate:</span>
+                      <strong class="p-val" id="exit-prev-plate">-</strong>
+                    </div>
+                    <div class="preview-row">
+                      <span class="p-label">Parked Slot:</span>
+                      <span class="p-badge" id="exit-prev-slot">-</span>
+                    </div>
+                    <div class="preview-row">
+                      <span class="p-label">Entry Time:</span>
+                      <span class="p-val" id="exit-prev-entry">-</span>
+                    </div>
+                    <div class="preview-row">
+                      <span class="p-label">Duration Elapsed:</span>
+                      <span class="p-val" id="exit-prev-duration">-</span>
+                    </div>
+                    <div class="preview-row">
+                      <span class="p-label">Calculated Parking Fee:</span>
+                      <strong class="p-val fee" id="exit-prev-fee">₹0</strong>
+                    </div>
+                  </div>
+
+                  <button type="submit" class="btn btn-danger btn-lg w-100" id="btn-submit-exit">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                    Process Vehicle Exit
+                  </button>
+                </form>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Active Parked Vehicles List -->
+          <div class="card active-vehicles-card">
+            <div class="card-header">
+              <div class="header-title-group">
+                <h3>Currently Parked Vehicles</h3>
+                <span class="card-subtitle">Stored in custom <code>LinkedList</code> & indexed in <code>CustomHashMap</code></span>
+              </div>
+              <div class="search-input-group">
+                <input type="text" id="active-vehicles-search" class="form-input form-input-sm" placeholder="Filter active vehicles...">
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="data-table" id="table-active-vehicles">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Vehicle Plate</th>
+                      <th>Type</th>
+                      <th>Driver</th>
+                      <th>Slot ID</th>
+                      <th>Zone</th>
+                      <th>Entry Time</th>
+                      <th>Duration</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tbody-active-vehicles">
+                    <!-- Populated via JavaScript -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+        </section>
+
+        <!-- ============================================== -->
+        <!-- PAGE 5: DSA VISUALIZER (8 STRUCTURES)          -->
+        <!-- ============================================== -->
+        <section id="page-visualizer" class="page-section">
+          
+          <div class="viz-header-controls">
+            <div class="viz-tabs-nav" id="viz-tabs-nav">
+              <button class="vtab-btn active" data-viz="array">1. Array (Slots)</button>
+              <button class="vtab-btn" data-viz="linkedlist">2. Linked List (Active)</button>
+              <button class="vtab-btn" data-viz="queue">3. Queue (Waiting FIFO)</button>
+              <button class="vtab-btn" data-viz="stack">4. Stack (Operations LIFO)</button>
+              <button class="vtab-btn" data-viz="hashmap">5. Hash Map (Buckets)</button>
+              <button class="vtab-btn" data-viz="bst">6. Binary Search Tree</button>
+              <button class="vtab-btn" data-viz="minheap">7. Min-Heap (Priority)</button>
+              <button class="vtab-btn" data-viz="graph">8. Graph (BFS / DFS)</button>
+            </div>
+          </div>
+
+          <!-- VIZ TAB 1: ARRAY -->
+          <div class="viz-view active" id="viz-view-array">
+            <div class="card">
+              <div class="card-header">
+                <div class="header-title-group">
+                  <h3>Array Data Structure: <code>parkingSlots[0..23]</code></h3>
+                  <span class="card-subtitle">Contiguous memory representation with O(1) random access by index</span>
+                </div>
+                <div class="dsa-badges">
+                  <span class="complexity-badge">Access: O(1)</span>
+                  <span class="complexity-badge">Search: O(n)</span>
+                </div>
+              </div>
+              <div class="card-body">
+                <p class="viz-explanation">The parking lot represents an Array of slot objects. Each slot has an index <code>i</code>, slot ID, status, and vehicle reference.</p>
+                <div class="array-visualizer-container" id="viz-array-container">
+                  <!-- Array visual elements injected via JS -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- VIZ TAB 2: LINKED LIST -->
+          <div class="viz-view" id="viz-view-linkedlist">
+            <div class="card">
+              <div class="card-header">
+                <div class="header-title-group">
+                  <h3>Singly Linked List: Active Parked Vehicles</h3>
+                  <span class="card-subtitle">Dynamic linear data structure where nodes point to the next node via pointers</span>
+                </div>
+                <div class="dsa-badges">
+                  <span class="complexity-badge">Insert: O(1)</span>
+                  <span class="complexity-badge">Delete: O(n)</span>
+                  <span class="complexity-badge">Search: O(n)</span>
+                </div>
+              </div>
+              <div class="card-body">
+                <p class="viz-explanation">Active vehicles are linked together dynamically. When a car enters, a new <code>Node(vehicle)</code> is appended. When a car exits, pointers are unlinked.</p>
+                <div class="linked-list-stage" id="viz-ll-stage">
+                  <!-- Injected via JavaScript -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- VIZ TAB 3: QUEUE -->
+          <div class="viz-view" id="viz-view-queue">
+            <div class="card">
+              <div class="card-header">
+                <div class="header-title-group">
+                  <h3>Queue: Waiting Vehicles (First-In-First-Out)</h3>
+                  <span class="card-subtitle">FIFO data structure: Vehicles enter at REAR and leave at FRONT</span>
+                </div>
+                <div class="dsa-badges">
+                  <span class="complexity-badge">Enqueue: O(1)</span>
+                  <span class="complexity-badge">Dequeue: O(1)</span>
+                  <span class="complexity-badge">Peek: O(1)</span>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="viz-action-bar">
+                  <button class="btn btn-outline-cyan btn-sm" id="btn-viz-enqueue-dummy">+ Enqueue Test Car</button>
+                  <button class="btn btn-outline-danger btn-sm" id="btn-viz-dequeue-dummy">- Dequeue Front</button>
+                </div>
+                <div class="queue-stage" id="viz-queue-stage">
+                  <!-- Injected via JavaScript -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- VIZ TAB 4: STACK -->
+          <div class="viz-view" id="viz-view-stack">
+            <div class="card">
+              <div class="card-header">
+                <div class="header-title-group">
+                  <h3>Stack: Recent Operations & Activity (LIFO)</h3>
+                  <span class="card-subtitle">Last-In-First-Out data structure for tracking and undoing parking events</span>
+                </div>
+                <div class="dsa-badges">
+                  <span class="complexity-badge">Push: O(1)</span>
+                  <span class="complexity-badge">Pop: O(1)</span>
+                  <span class="complexity-badge">Peek: O(1)</span>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="viz-action-bar">
+                  <button class="btn btn-outline-purple btn-sm" id="btn-viz-pop-stack">Pop Top Operation</button>
+                </div>
+                <div class="stack-stage" id="viz-stack-stage">
+                  <!-- Injected via JavaScript -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- VIZ TAB 5: HASH MAP -->
+          <div class="viz-view" id="viz-view-hashmap">
+            <div class="card">
+              <div class="card-header">
+                <div class="header-title-group">
+                  <h3>Custom Hash Map: Vehicle Registry & Buckets</h3>
+                  <span class="card-subtitle">Custom hash function with bucket array and separate chaining for collision resolution</span>
+                </div>
+                <div class="dsa-badges">
+                  <span class="complexity-badge">Average Get: O(1)</span>
+                  <span class="complexity-badge">Worst Get: O(n)</span>
+                  <span class="complexity-badge">Put: O(1)</span>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="hashmap-search-row">
+                  <input type="text" id="hashmap-test-key" class="form-input form-input-sm" placeholder="Enter vehicle plate to hash...">
+                  <button class="btn btn-cyan btn-sm" id="btn-hashmap-test-hash">Compute Hash & Lookup</button>
+                  <div class="hash-result-pill" id="hash-calc-output">Hash: - | Bucket: -</div>
+                </div>
+                <div class="hashmap-stage" id="viz-hashmap-stage">
+                  <!-- Injected via JavaScript -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- VIZ TAB 6: BINARY SEARCH TREE -->
+          <div class="viz-view" id="viz-view-bst">
+            <div class="card">
+              <div class="card-header">
+                <div class="header-title-group">
+                  <h3>Binary Search Tree (BST): Parking Slots Index</h3>
+                  <span class="card-subtitle">Hierarchical tree keyed by slot distance from entrance for logarithmic search</span>
+                </div>
+                <div class="dsa-badges">
+                  <span class="complexity-badge">Search: O(log n)</span>
+                  <span class="complexity-badge">Insert: O(log n)</span>
+                  <span class="complexity-badge">Inorder: O(n)</span>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="viz-action-bar">
+                  <button class="btn btn-outline-cyan btn-sm" id="btn-bst-inorder">Run Inorder Traversal (Sorted)</button>
+                  <div class="bst-inorder-output" id="bst-traversal-res">Inorder traversal: Click button to execute</div>
+                </div>
+                <div class="bst-stage" id="viz-bst-stage">
+                  <!-- Injected via SVG/Canvas in JS -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- VIZ TAB 7: MIN HEAP -->
+          <div class="viz-view" id="viz-view-minheap">
+            <div class="card">
+              <div class="card-header">
+                <div class="header-title-group">
+                  <h3>Min-Heap Priority Queue: Recommendation Engine</h3>
+                  <span class="card-subtitle">Complete binary tree where parent score ≤ children scores. Root is always the best slot!</span>
+                </div>
+                <div class="dsa-badges">
+                  <span class="complexity-badge">extractMin: O(log n)</span>
+                  <span class="complexity-badge">Insert: O(log n)</span>
+                  <span class="complexity-badge">Peek: O(1)</span>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="viz-action-bar">
+                  <button class="btn btn-outline-emerald btn-sm" id="btn-heap-rebuild">Rebuild Heap from Available Slots</button>
+                  <button class="btn btn-outline-purple btn-sm" id="btn-heap-extract">Extract Root Min</button>
+                </div>
+                <div class="min-heap-stage" id="viz-heap-stage">
+                  <!-- Injected via JavaScript -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- VIZ TAB 8: GRAPH -->
+          <div class="viz-view" id="viz-view-graph">
+            <div class="card">
+              <div class="card-header">
+                <div class="header-title-group">
+                  <h3>Parking Lot Graph: Zones & Paths</h3>
+                  <span class="card-subtitle">Adjacency List representation connecting Entrance, Zone A, B, C, D, and parking bays</span>
+                </div>
+                <div class="dsa-badges">
+                  <span class="complexity-badge">BFS: O(V + E)</span>
+                  <span class="complexity-badge">DFS: O(V + E)</span>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="graph-controls-bar">
+                  <button class="btn btn-primary btn-sm" id="btn-graph-run-bfs">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v8"/><path d="M8 12h8"/></svg>
+                    Animate BFS (Breadth-First Search)
+                  </button>
+                  <button class="btn btn-outline-cyan btn-sm" id="btn-graph-run-dfs">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="13 17 18 12 13 7"/><polyline points="6 17 11 12 6 7"/></svg>
+                    Animate DFS (Depth-First Search)
+                  </button>
+                  <button class="btn btn-outline-light btn-sm" id="btn-graph-reset">Reset Highlights</button>
+                  <div class="graph-legend">
+                    <span class="g-leg"><span class="g-dot unvisited"></span> Unvisited</span>
+                    <span class="g-leg"><span class="g-dot visiting"></span> Visiting/Active</span>
+                    <span class="g-leg"><span class="g-dot visited"></span> Visited</span>
+                  </div>
+                </div>
+
+                <div class="graph-canvas-container" id="viz-graph-container">
+                  <svg id="graph-svg" class="graph-svg" viewBox="0 0 800 480" width="100%" height="450">
+                    <!-- Graph nodes and links drawn dynamically by JS -->
+                  </svg>
+                </div>
+
+                <div class="graph-traversal-status" id="graph-traversal-info">
+                  <strong>Traversal State:</strong> Idle. Click "Animate BFS" or "Animate DFS" to observe queue/recursion in action.
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </section>
+
+        <!-- ============================================== -->
+        <!-- PAGE 6: SEARCH & SORT LAB                      -->
+        <!-- ============================================== -->
+        <section id="page-search-sort" class="page-section">
+          
+          <div class="algo-lab-grid">
+            
+            <!-- Searching Algorithms Card -->
+            <div class="card algo-card">
+              <div class="card-header">
+                <div class="header-title-group">
+                  <h2>Searching Algorithms Visualizer</h2>
+                  <span class="card-subtitle">Compare Linear Search vs. Binary Search on Parking Slot IDs</span>
+                </div>
+                <div class="dsa-badges">
+                  <span class="complexity-badge">Linear: O(n)</span>
+                  <span class="complexity-badge">Binary: O(log n)</span>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="algo-controls-row">
+                  <div class="form-group flex-1">
+                    <label for="search-target-input">Search Target (Slot ID):</label>
+                    <input type="text" id="search-target-input" class="form-input" value="B3" placeholder="e.g. A1, B4, C2, D5">
+                  </div>
+                  <div class="form-group flex-1">
+                    <label for="search-algo-select">Select Algorithm:</label>
+                    <select id="search-algo-select" class="form-select">
+                      <option value="linear">Linear Search (Sequential scan • O(n))</option>
+                      <option value="binary">Binary Search (Divide & Conquer • O(log n))</option>
+                    </select>
+                  </div>
+                  <div class="btn-group-align">
+                    <button class="btn btn-primary" id="btn-run-search">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                      Execute Search
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Search Metrics -->
+                <div class="algo-metrics-bar">
+                  <div class="a-metric">Algorithm: <strong id="search-metric-algo">Linear Search</strong></div>
+                  <div class="a-metric">Target: <strong id="search-metric-target">B3</strong></div>
+                  <div class="a-metric">Comparisons: <strong id="search-metric-comps">0</strong></div>
+                  <div class="a-metric">Result: <strong id="search-metric-res">Ready</strong></div>
+                  <div class="a-metric">Time Complexity: <strong id="search-metric-comp">O(n)</strong></div>
+                </div>
+
+                <!-- Searching Visual Array -->
+                <div class="algo-visual-stage" id="search-visual-stage">
+                  <!-- Injected via JavaScript -->
+                </div>
+
+                <div class="algo-step-explanation" id="search-step-explanation">
+                  Step explanation will appear here during execution.
+                </div>
+              </div>
+            </div>
+
+            <!-- Sorting Algorithms Card -->
+            <div class="card algo-card">
+              <div class="card-header">
+                <div class="header-title-group">
+                  <h2>Sorting Algorithms Visualizer</h2>
+                  <span class="card-subtitle">Animate Bubble Sort & Selection Sort on Slot Distances</span>
+                </div>
+                <div class="dsa-badges">
+                  <span class="complexity-badge">Bubble Sort: O(n²)</span>
+                  <span class="complexity-badge">Selection Sort: O(n²)</span>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="algo-controls-row">
+                  <div class="form-group flex-1">
+                    <label for="sort-algo-select">Sorting Algorithm:</label>
+                    <select id="sort-algo-select" class="form-select">
+                      <option value="bubble">Bubble Sort (Compare & Swap Adjacent)</option>
+                      <option value="selection">Selection Sort (Find Minimum & Swap)</option>
+                    </select>
+                  </div>
+                  <div class="form-group flex-1">
+                    <label for="sort-speed-select">Animation Speed:</label>
+                    <select id="sort-speed-select" class="form-select">
+                      <option value="400">Normal (400ms)</option>
+                      <option value="150">Fast (150ms)</option>
+                      <option value="800">Slow / Step-by-step (800ms)</option>
+                    </select>
+                  </div>
+                  <div class="btn-group-align">
+                    <button class="btn btn-emerald" id="btn-run-sort">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                      Start Sorting
+                    </button>
+                    <button class="btn btn-outline-cyan" id="btn-shuffle-sort">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg>
+                      Shuffle Array
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Sorting Metrics -->
+                <div class="algo-metrics-bar">
+                  <div class="a-metric">Pass / Step: <strong id="sort-metric-step">0</strong></div>
+                  <div class="a-metric">Comparisons: <strong id="sort-metric-comps">0</strong></div>
+                  <div class="a-metric">Swaps: <strong id="sort-metric-swaps">0</strong></div>
+                  <div class="a-metric">Status: <strong id="sort-metric-status">Ready</strong></div>
+                </div>
+
+                <!-- Dynamic Bar Chart Visualization -->
+                <div class="bars-container" id="sort-bars-container">
+                  <!-- Bars generated via JavaScript -->
+                </div>
+
+                <div class="algo-step-explanation" id="sort-step-explanation">
+                  Press "Start Sorting" to visualize the algorithmic swaps and comparisons in real-time.
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </section>
+
+        <!-- ============================================== -->
+        <!-- PAGE 7: HISTORY                                -->
+        <!-- ============================================== -->
+        <section id="page-history" class="page-section">
+          
+          <div class="card history-card">
+            <div class="card-header">
+              <div class="header-title-group">
+                <h2>Parking Operations History</h2>
+                <span class="card-subtitle">Audit trail of all parking entry, exit, and waiting events stored in LocalStorage</span>
+              </div>
+              <div class="history-actions-row">
+                <select id="history-filter-action" class="form-select form-select-sm">
+                  <option value="ALL">All Actions</option>
+                  <option value="PARK">Park Actions Only</option>
+                  <option value="EXIT">Exit Actions Only</option>
+                  <option value="ENQUEUE">Waiting Queue Events</option>
+                </select>
+                <button class="btn btn-outline-cyan btn-sm" id="btn-export-history">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                  Export Log
+                </button>
+                <button class="btn btn-outline-danger btn-sm" id="btn-clear-history">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                  Clear History
+                </button>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="data-table" id="table-history">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Action</th>
+                      <th>Vehicle Plate</th>
+                      <th>Slot ID</th>
+                      <th>Timestamp</th>
+                      <th>Details / Trigger</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tbody-history">
+                    <!-- Populated via JavaScript -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+        </section>
+
+        <!-- ============================================== -->
+        <!-- PAGE 8: ABOUT DSA / VIVA PREP                  -->
+        <!-- ============================================== -->
+        <section id="page-about-dsa" class="page-section">
+          
+          <div class="viva-hero">
+            <div class="viva-badge">B.Tech CSE Project Defense Guide</div>
+            <h2>DSA Architecture & Viva Voce Reference</h2>
+            <p>Comprehensive breakdown of why each Data Structure and Algorithm was selected, how it solves real-world smart parking bottlenecks, and standard examiner questions with high-scoring answers.</p>
+          </div>
+
+          <!-- Master Complexity Matrix -->
+          <div class="card viva-card">
+            <div class="card-header">
+              <div class="header-title-group">
+                <h3>Master DSA Complexity & Mapping Matrix</h3>
+                <span class="card-subtitle">Quick reference guide for project evaluation and viva examination</span>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="data-table viva-table">
+                  <thead>
+                    <tr>
+                      <th>Data Structure / Algorithm</th>
+                      <th>Role in ParkWise System</th>
+                      <th>Time Complexity</th>
+                      <th>Space Complexity</th>
+                      <th>Why this structure?</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><strong class="text-blue">Array</strong></td>
+                      <td>Slot grid storage & direct index mapping</td>
+                      <td>Access: <code>O(1)</code>, Search: <code>O(n)</code></td>
+                      <td><code>O(n)</code></td>
+                      <td>Fixed number of bays requires constant-time indexed lookup.</td>
+                    </tr>
+                    <tr>
+                      <td><strong class="text-purple">Singly Linked List</strong></td>
+                      <td>Dynamically storing active parked vehicles</td>
+                      <td>Insert: <code>O(1)</code>, Delete: <code>O(n)</code></td>
+                      <td><code>O(n)</code></td>
+                      <td>Efficient dynamic memory allocation without fixed size constraints.</td>
+                    </tr>
+                    <tr>
+                      <td><strong class="text-amber">Queue (FIFO)</strong></td>
+                      <td>Waiting vehicle buffer when lot is full</td>
+                      <td>Enqueue: <code>O(1)</code>, Dequeue: <code>O(1)</code></td>
+                      <td><code>O(k)</code></td>
+                      <td>Guarantees fairness: first arriving driver gets the next freed slot.</td>
+                    </tr>
+                    <tr>
+                      <td><strong class="text-rose">Stack (LIFO)</strong></td>
+                      <td>Recent operations log & undo stack</td>
+                      <td>Push: <code>O(1)</code>, Pop: <code>O(1)</code></td>
+                      <td><code>O(m)</code></td>
+                      <td>Most recent parking/exit operation is on top for instant inspection.</td>
+                    </tr>
+                    <tr>
+                      <td><strong class="text-cyan">Custom Hash Map</strong></td>
+                      <td>Instant vehicle lookup by license plate</td>
+                      <td>Average: <code>O(1)</code>, Worst: <code>O(n)</code></td>
+                      <td><code>O(n)</code></td>
+                      <td>Prevents scanning all slots; license plate string hashes to bucket index.</td>
+                    </tr>
+                    <tr>
+                      <td><strong class="text-green">Binary Search Tree (BST)</strong></td>
+                      <td>Indexed range queries by distance</td>
+                      <td>Search/Insert: <code>O(log n)</code></td>
+                      <td><code>O(n)</code></td>
+                      <td>Inorder traversal produces a sorted list of bays in ascending distance.</td>
+                    </tr>
+                    <tr>
+                      <td><strong class="text-emerald">Min-Heap / Priority Queue</strong></td>
+                      <td>Smart slot recommendation engine</td>
+                      <td>Extract-Min: <code>O(log n)</code>, Insert: <code>O(log n)</code></td>
+                      <td><code>O(n)</code></td>
+                      <td>Root is guaranteed to hold the optimal bay with minimum cost score.</td>
+                    </tr>
+                    <tr>
+                      <td><strong class="text-blue">Graph (Adjacency List)</strong></td>
+                      <td>Parking lot physical layout & connectivity</td>
+                      <td>BFS/DFS: <code>O(V + E)</code></td>
+                      <td><code>O(V + E)</code></td>
+                      <td>Models non-linear zone networks and pathways between gates and bays.</td>
+                    </tr>
+                    <tr>
+                      <td><strong class="text-cyan">BFS (Breadth-First Search)</strong></td>
+                      <td>Finding nearest reachable available bays</td>
+                      <td><code>O(V + E)</code></td>
+                      <td><code>O(V)</code></td>
+                      <td>Explores layer-by-layer; finds shortest path in unweighted graph.</td>
+                    </tr>
+                    <tr>
+                      <td><strong class="text-purple">DFS (Depth-First Search)</strong></td>
+                      <td>Deep zone branch exploration</td>
+                      <td><code>O(V + E)</code></td>
+                      <td><code>O(V)</code></td>
+                      <td>Demonstrates recursive backtracking traversal of the parking network.</td>
+                    </tr>
+                    <tr>
+                      <td><strong class="text-amber">Binary Search</strong></td>
+                      <td>Logarithmic slot search on sorted IDs</td>
+                      <td><code>O(log n)</code></td>
+                      <td><code>O(1)</code></td>
+                      <td>Halves search space on every comparison step.</td>
+                    </tr>
+                    <tr>
+                      <td><strong class="text-rose">Bubble & Selection Sort</strong></td>
+                      <td>Sorting bays by distance/occupancy duration</td>
+                      <td><code>O(n²)</code></td>
+                      <td><code>O(1)</code></td>
+                      <td>Clear pedagogical demonstration of comparison and swap mechanics.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Viva Q&A Accordion/Cards -->
+          <div class="viva-qa-section">
+            <h3 class="viva-section-title">Frequently Asked Viva Questions & Answers</h3>
+
+            <div class="qa-grid">
+              
+              <div class="qa-card">
+                <div class="qa-header">
+                  <span class="q-badge">Q1</span>
+                  <h4>Why use a Min-Heap instead of simply sorting an array for smart recommendation?</h4>
+                </div>
+                <div class="qa-body">
+                  <p><strong>Answer:</strong> Sorting an entire array takes <code>O(n log n)</code> time. With a Min-Heap, we can build or insert candidate slots in <code>O(k log k)</code> and extract the single best slot in <code>O(1)</code> peek or <code>O(log k)</code> extractMin. When slot availability dynamically updates, inserting a newly freed slot into an existing heap takes only <code>O(log k)</code> without re-sorting the whole lot.</p>
+                </div>
+              </div>
+
+              <div class="qa-card">
+                <div class="qa-header">
+                  <span class="q-badge">Q2</span>
+                  <h4>Why is BFS preferred over DFS for finding reachable parking slots?</h4>
+                </div>
+                <div class="qa-body">
+                  <p><strong>Answer:</strong> Breadth-First Search (BFS) explores all neighboring nodes at distance 1 before moving to distance 2. In an unweighted graph representing parking zones, BFS guarantees finding the nearest reachable available slot with the minimum number of edge hops from the entrance. DFS might traverse deep into remote dead-ends before backtracking.</p>
+                </div>
+              </div>
+
+              <div class="qa-card">
+                <div class="qa-header">
+                  <span class="q-badge">Q3</span>
+                  <h4>How does the custom Hash Map handle collisions?</h4>
+                </div>
+                <div class="qa-body">
+                  <p><strong>Answer:</strong> Our implementation uses a polynomial rolling hash function modulo bucket size: <code>hash(key) % capacity</code>. For collisions (two different license plates mapping to the same bucket index), we implement <strong>Separate Chaining</strong> using linked entries within that bucket. This maintains average <code>O(1)</code> retrieval.</p>
+                </div>
+              </div>
+
+              <div class="qa-card">
+                <div class="qa-header">
+                  <span class="q-badge">Q4</span>
+                  <h4>What happens algorithmically when a vehicle exits and the waiting queue is not empty?</h4>
+                </div>
+                <div class="qa-body">
+                  <p><strong>Answer:</strong> An automatic atomic handoff occurs:
+                  1. The exiting car is unlinked from the <code>LinkedList</code> and deleted from the <code>HashMap</code>.
+                  2. Its slot is marked available in the <code>Array</code>.
+                  3. If <code>waitingQueue.isEmpty() == false</code>, we call <code>waitingQueue.dequeue()</code>.
+                  4. The dequeued car is immediately allocated the newly freed slot (or routed via Min-Heap).
+                  5. All structures (LinkedList, HashMap, Stack) are updated synchronously.</p>
+                </div>
+              </div>
+
+              <div class="qa-card">
+                <div class="qa-header">
+                  <span class="q-badge">Q5</span>
+                  <h4>Why maintain both an Array and a Linked List for vehicles?</h4>
+                </div>
+                <div class="qa-body">
+                  <p><strong>Answer:</strong> The <strong>Array</strong> represents physical, fixed infrastructure (the 24 physical bays that always exist). The <strong>Linked List</strong> represents dynamic occupancy (only active cars). If only 3 cars are parked, iterating through the Linked List visits only 3 nodes, whereas scanning the parking lot array requires checking all 24 slots.</p>
+                </div>
+              </div>
+
+              <div class="qa-card">
+                <div class="qa-header">
+                  <span class="q-badge">Q6</span>
+                  <h4>How is the Priority Score in Min-Heap calculated?</h4>
+                </div>
+                <div class="qa-body">
+                  <p><strong>Answer:</strong> The composite priority cost formula is:
+                  <code>score = (distanceFromEntrance * 0.7) + (zonePreferencePenalty * 0.3)</code>
+                  Lower score signifies higher priority (closer to entrance & matching driver's zone preference). The Min-Heap root always holds the element with the absolute lowest score.</p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Project Metadata Card -->
+          <div class="card viva-author-card">
+            <div class="card-body author-content">
+              <div class="author-badge-group">
+                <h3>ParkWise – DSA Based Smart Parking Management System</h3>
+                <p>Designed, developed, and documented for Bachelor of Technology in Computer Science & Engineering.</p>
+              </div>
+              <div class="author-meta-pills">
+                <span class="a-pill">Author: <strong>Lakshay Kumar</strong></span>
+                <span class="a-pill">Degree: <strong>B.Tech CSE</strong></span>
+                <span class="a-pill">Architecture: <strong>Pure Vanilla JS + CSS3 + HTML5</strong></span>
+                <span class="a-pill">Data Persistence: <strong>HTML5 LocalStorage</strong></span>
+              </div>
+            </div>
+          </div>
+
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- MODAL: SLOT DETAILS & DIRECT ACTION            -->
+  <!-- ============================================== -->
+  <div id="slot-modal" class="modal-backdrop" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <h3 id="modal-slot-id">Slot Details</h3>
+          <span class="status-chip chip-available" id="modal-slot-chip">Available</span>
+        </div>
+        <button class="modal-close" id="btn-close-modal" aria-label="Close Modal">&times;</button>
+      </div>
+      <div class="modal-body" id="modal-slot-body">
+        <!-- Injected via JavaScript -->
+      </div>
+      <div class="modal-footer" id="modal-slot-footer">
+        <!-- Buttons injected dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript Core -->
+  <script src="script.js"></script>
+</body>
+</html>
